@@ -45,5 +45,5 @@ class MyClass(models.Model):
         return self.address
 ```
 
-![ScreenShot](https://raw.github.com/20tab/twentytab-gmaps/img/screenshot.png)
+![ScreenShot](https://raw.github.com/20tab/twentytab-gmaps/blob/master/img/screenshot.png)
 
