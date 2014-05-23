@@ -1,0 +1,7 @@
+.gmaps-map-init{
+    width: 300px;
+    height: 300px;
+    margin: 30px;
+    padding: 0;
+    border: 2px inset gray;
+}
