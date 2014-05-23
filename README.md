@@ -46,3 +46,6 @@ class MyClass(models.Model):
 ```
 
 ![ScreenShot](https://raw.github.com/20tab/twentytab-gmaps/img/screenshot.png)
+
+![ScreenShot](https://raw.github.com/unbit/unbit-bars/master/screenshot.png)
+
