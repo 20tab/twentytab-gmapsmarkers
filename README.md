@@ -1,7 +1,7 @@
 twentytab-gmaps
 ===============
 
-A django widget with [Select2](http://ivaynberg.github.com/select2/) integration that uses [google geocode](https://developers.google.com/maps/documentation/geocoding/) api to search place and create map with markers
+A django widget with [Select2](http://ivaynberg.github.com/select2/) integration that uses [google geocode](https://developers.google.com/maps/documentation/geocoding/) api to search places and create maps with markers
 
 ## Installation
 
