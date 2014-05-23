@@ -1,7 +1,7 @@
 twentytab-gmaps
 ===============
 
-A django widget with select2 integration that uses google geocode api to search place and create map with markers
+A django widget with [Select2](http://ivaynberg.github.com/select2/) integration that uses [google geocode](https://developers.google.com/maps/documentation/geocoding/) api to search place and create map with markers
 
 ## Installation
 
@@ -47,3 +47,21 @@ class MyClass(models.Model):
 
 ![ScreenShot](https://raw.github.com/20tab/twentytab-gmaps/master/img/screenshot.png)
 
+
+## Google geocode results
+
+The widget binds a javascript event (gmaps-click-on-marker) on GmapsField that can capture it,
+sending back the json result given by google geocode api.
+
+For example:
+```js
+jQuery(function($){
+
+    $("#id_address").on('gmaps-click-on-marker', function(e, data){
+        console.log('gmaps-click-on-marker');
+        console.log(data);
+        console.log($(this))
+    });
+
+});
+```
