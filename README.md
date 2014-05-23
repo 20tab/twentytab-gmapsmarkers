@@ -45,4 +45,4 @@ class MyClass(models.Model):
         return self.address
 ```
 
-![alt tag](https://raw.github.com/20tab/twentytab-gmaps/img/screenshot.png)
+![alt tag](https://raw.github.com/20tab/twentytab-gmaps/master/img/screenshot.png)
