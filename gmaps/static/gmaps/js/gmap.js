@@ -10,7 +10,8 @@ jQuery(function($){
             googleApiUrl: "https://maps.googleapis.com/maps/api/geocode/json",
             typeid: null,
             geocodeid: null,
-            select2_options: {}
+            select2_options: {},
+            allowed_types: []
         }, options);
 
         $.fn.gmap_init = function(){
@@ -49,13 +50,25 @@ jQuery(function($){
             $(this).select2('destroy');
         }
 
+        function contains(arr,obj) {
+            return (arr.indexOf(obj) != -1);
+        }
         var type_choices = function(results){
-            var types_list = []
+            var types_list = [];
             for(el in results){
                 var components = results[el]['address_components'];
                 for(c in components){
-                    var types = components[c]['types']
-                    types_list.push.apply(types_list, types);
+                    var types = components[c]['types'];
+                    if(config.allowed_types.length > 0){
+                        for(t in types){
+                            if(contains(config.allowed_types, types[t])){
+                                types_list.push(types[t]);
+                            }
+                        }
+                    }
+                    else{
+                        types_list.push.apply(types_list, types);
+                    }
                 }
             }
             types_list = types_list.filter( function( item, index, inputArray ) {

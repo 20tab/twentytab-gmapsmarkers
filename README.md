@@ -36,8 +36,14 @@ from gmaps.fields import GmapsField, GeotypeField
 
 
 class MyClass(models.Model):
-    address = GmapsField(plugin_options={'geocode_field': 'geocode', 'type_field': 'geo_type'},
-                         select2_options={'width': '300px'})
+    address = GmapsField(
+        plugin_options={
+            'geocode_field': 'geocode',
+            'type_field': 'geo_type',
+            'allowed_types': ['country', 'administrative_area_level_1']
+        },
+        select2_options={'width': '300px'}
+    )
     geocode = models.CharField(max_length=250)
     geo_type = GeotypeField()
 
