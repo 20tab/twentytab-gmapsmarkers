@@ -104,6 +104,8 @@ jQuery(function($){
         // Maps functions
         // ________________________________
 
+        var all_markers = [];
+
         // initialize the map
         function init_map(results) {
             var map,
@@ -127,7 +129,8 @@ jQuery(function($){
                 lat = results[i].geometry.location.lat;
                 lng = results[i].geometry.location.lng;
                 name = results[i].formatted_address;
-                set_markers(map, results[i]);
+                var marker = set_markers(map, results[i]);
+                all_markers.push(marker);
             }
 
             // Automatically set center and zoom
@@ -140,6 +143,17 @@ jQuery(function($){
 
         // Set markers
         function set_markers(map, result) {
+            var selectedMarker;
+
+            var icon = {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillOpacity: 0.8,
+                fillColor: 'ff0000',
+                strokeOpacity: 1.0,
+                strokeColor: 'ff0000',
+                strokeWeight: 1.0,
+                scale: 10
+            };
 
             var lat = result.geometry.location.lat;
             var lng = result.geometry.location.lng;
@@ -149,9 +163,12 @@ jQuery(function($){
             var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(lat, lng),
                 map: map,
-                title: name
+                title: name,
+                icon: icon
             });
 
+
+            var iconSelected = $.extend({}, icon, {fillColor: 'ED7A07'});
             // Set CLICK event for marker
 
             google.maps.event.addListener(marker, 'click', function(e) {
@@ -162,7 +179,21 @@ jQuery(function($){
                 $('#'+config.geocodeid).val(marker_lat+","+marker_lng);
 
                 self.trigger('gmaps-click-on-marker', [result]);
+
+                if (selectedMarker) {
+                    selectedMarker.setIcon(icon);
+                }
+
+                for(m in all_markers){
+                    all_markers[m].setIcon(icon);
+                }
+
+                this.setIcon(iconSelected);
+                selectedMarker = this;
+                map.panTo(this.getPosition());
+
             });
+            return marker;
         }
 
 
