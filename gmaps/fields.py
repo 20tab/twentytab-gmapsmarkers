@@ -50,7 +50,7 @@ class GeotypeFormField(forms.CharField):
 # Fix field for South
 try:
     from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^gmaps\.fields\.GmapsFormField"])
+    add_introspection_rules([], ["^gmaps\.fields\.GmapsField"])
     add_introspection_rules([], ["^gmaps\.fields\.GeotypeField"])
 except:
     pass

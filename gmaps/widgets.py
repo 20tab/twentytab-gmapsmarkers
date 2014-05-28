@@ -15,11 +15,9 @@ class GmapsSelectAutocomplete(forms.TextInput):
 
         if 'geocode_field' in self.plugin_options:
             self.plugin_options['geocodeid'] = '{}{}'.format(tmp_id, self.plugin_options['geocode_field'])
-            #del self.plugin_options['geocode_field']
 
         if 'type_field' in self.plugin_options:
             self.plugin_options['typeid'] = '{}{}'.format(tmp_id, self.plugin_options['type_field'])
-            #del self.plugin_options['type_field']
 
         opts = ""
         if self.plugin_options:
@@ -42,19 +40,11 @@ class GmapsSelectAutocomplete(forms.TextInput):
                 opts
             )
         )
-        # <script type="text/javascript">
-        #     jQuery(function($){{
-        #         $("#{}").ttGmap($.extend({{
-        #             mapCanvas:'#gmaps-map-init-{}',
-        #             googleApiKey:'{}',
-        #             select2_options: {}
-        #         }}, {}));
-        #     }});
-        # </script>
         return res
 
     class Media:
         js = (
+            'https://maps.googleapis.com/maps/api/js?v=3.14&key={}&sensor=false'.format(settings.GMAPS_API_KEY),
             settings.JQUERY_LIB,
             u'{}gmaps/{}/select2.min.js'.format(settings.STATIC_URL, settings.SELECT2_VERSION),
             u'{}gmaps/js/gmap.js'.format(settings.STATIC_URL),
