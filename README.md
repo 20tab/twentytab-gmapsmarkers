@@ -18,11 +18,18 @@ INSTALLED_APPS = {
 
 GMAPS_API_KEY = "xxxxxxxxxxxxxxxxxxxx"
 
-SELECT2_VERSION = u'select2-3.4.8'
+```
+
+twentytab-gmaps will set his own jquery plugin. If you already use yours you have to define the following parameters in your settings:
+
+```py
+
+STATIC_URL = u'/static/'
+JQUERY_LIB = 'path_to_jquery'
+SELECT2_LIB = 'path_to_select2_js'
+SELECT2_CSS_LIB = 'path_to_select2_css'
 
 ```
-SELECT2_VERSION parameter needs to be defined if the application uses [twentytab-select2](https://github.com/20tab/twentytab-select2)
-or other apps that define it.
 
 
 - Static files
