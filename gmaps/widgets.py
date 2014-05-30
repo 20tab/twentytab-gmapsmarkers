@@ -46,12 +46,12 @@ class GmapsSelectAutocomplete(forms.TextInput):
         js = (
             'https://maps.googleapis.com/maps/api/js?v=3.14&key={}&sensor=false'.format(settings.GMAPS_API_KEY),
             settings.JQUERY_LIB,
-            u'{}gmaps/{}/select2.min.js'.format(settings.STATIC_URL, settings.SELECT2_VERSION),
+            settings.SELECT2_LIB,
             u'{}gmaps/js/gmap.js'.format(settings.STATIC_URL),
             u'{}gmaps/js/gmaps__init.js'.format(settings.STATIC_URL),
         )
         css = {u"all": (
-            u"{}gmaps/{}/select2.css".format(settings.STATIC_URL, settings.SELECT2_VERSION),
+            settings.SELECT2_CSS_LIB,
             u"{}gmaps/css/gmaps.css".format(settings.STATIC_URL),
         )}
 

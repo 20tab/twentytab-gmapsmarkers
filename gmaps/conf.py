@@ -8,7 +8,14 @@ class GmapsConf(AppConf):
         getattr(settings, u'STATIC_URL', u'/static/'),
         u"gmaps/js/jquery-2.1.0.min.js"
     )
-    SELECT2_VERSION = u'select2-3.4.8'
+    SELECT2_LIB = u"{}{}".format(
+        getattr(settings, u'STATIC_URL', u'/static/'),
+        u"gmaps/select2-3.4.8/select2.min.js"
+    )
+    SELECT2_CSS_LIB = u"{}{}".format(
+        getattr(settings, u'STATIC_URL', u'/static/'),
+        u"gmaps/select2-3.4.8/select2.css"
+    )
 
     def configure_static_url(self, value):
         if not getattr(settings, 'STATIC_URL', None):
@@ -22,8 +29,14 @@ class GmapsConf(AppConf):
             return value
         return getattr(settings, 'JQUERY_LIB')
 
-    def configure_select2_version(self, value):
-        if not getattr(settings, 'SELECT2_VERSION', None):
-            self._meta.holder.SELECT2_VERSION = value
+    def configure_select2_lib(self, value):
+        if not getattr(settings, 'SELECT2_LIB', None):
+            self._meta.holder.SELECT2_LIB = value
             return value
-        return getattr(settings, 'SELECT2_VERSION')
+        return getattr(settings, 'SELECT2_LIB')
+
+    def configure_select2_css_lib(self, value):
+        if not getattr(settings, 'SELECT2_CSS_LIB', None):
+            self._meta.holder.SELECT2_CSS_LIB = value
+            return value
+        return getattr(settings, 'SELECT2_CSS_LIB')
