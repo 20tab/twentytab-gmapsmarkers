@@ -18,7 +18,12 @@ INSTALLED_APPS = {
 
 GMAPS_API_KEY = "xxxxxxxxxxxxxxxxxxxx"
 
+SELECT2_VERSION = u'select2-3.4.8'
+
 ```
+SELECT2_VERSION parameter needs to be defined if the application uses [twentytab-select2](https://github.com/20tab/twentytab-select2)
+or other apps that define it.
+
 
 - Static files
 
