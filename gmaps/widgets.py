@@ -11,6 +11,7 @@ class GmapsSelectAutocomplete(forms.TextInput):
 
     def render(self, name, value, attrs=None):
         res = super(GmapsSelectAutocomplete, self).render(name, value, attrs)
+        print "\n\nVALUE: ", value
         tmp_id = attrs['id'].replace(self.plugin_options['gmaps_field_name'], '')
 
         if 'geocode_field' in self.plugin_options:
@@ -55,3 +56,11 @@ class GmapsSelectAutocomplete(forms.TextInput):
             u"{}gmaps/css/gmaps.css".format(settings.STATIC_URL),
         )}
 
+
+class GeotypeSelect(forms.Select):
+
+    def render(self, name, value, attrs=None, choices=()):
+        if value:
+            choices = list(choices)
+            choices.append((value, value))
+        return super(GeotypeSelect, self).render(name, value, attrs, choices)

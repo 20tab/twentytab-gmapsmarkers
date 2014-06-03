@@ -39,11 +39,19 @@ jQuery(function($){
                             results: results
                         };
                     }
+                },
+                initSelection : function (element, callback) {
+                    var data = {id: element.val(), text: element.val()};
+                    callback(data);
                 }
-
             }
             $(this).select2($.extend(opts,config.select2_options));
-            $('#'+config.typeid).select2($.extend({triggerChange: true}, config.select2_options));
+            $('#'+config.typeid).select2($.extend({
+                triggerChange: true
+            }, config.select2_options));
+            if($('#'+config.geocodeid).val()){
+                init_on_load($('#'+config.geocodeid).val(), $('#'+config.typeid).val());
+            }
         }
 
         $.fn.destroy = function(){
@@ -74,7 +82,6 @@ jQuery(function($){
             types_list = types_list.filter( function( item, index, inputArray ) {
                 return inputArray.indexOf(item) == index;
             }).sort();
-
             $('#'+config.typeid).html("")
             $(types_list).each(function() {
                 $('#'+config.typeid).append($("<option>").attr('value',this).text(this));
@@ -136,6 +143,43 @@ jQuery(function($){
             // Automatically set center and zoom
             autofit_map(map, results);
         }
+
+        function init_on_load(latlng, level) {
+            var latlng = latlng.split(',');
+            var myLatlng = new google.maps.LatLng(latlng[0], latlng[1]);
+
+            var id_canvas = config.mapCanvas.replace('#','');
+            var mapOptions = {
+                center: myLatlng
+            }
+            var map = new google.maps.Map(document.getElementById(id_canvas), mapOptions);
+
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map
+            });
+
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({'latLng': myLatlng}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    for(var r in results){
+                        for(var t in results[r].types){
+                            if(level == results[r].types[t]){
+                                map.setCenter(results[r].geometry.location);
+					            map.fitBounds(results[r].geometry.viewport);
+                                break;
+                            }
+                        }
+                    }
+
+				}else{
+					alert("Geocode was not successful for the following reason: " + status);
+				}
+
+			});
+
+        }
+
 
         $(this).bind('gmaps-click-on-marker', function(e, data){
             return data;

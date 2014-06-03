@@ -1,6 +1,6 @@
 from django.db import models
 from django import forms
-from gmaps.widgets import GmapsSelectAutocomplete
+from gmaps.widgets import GmapsSelectAutocomplete, GeotypeSelect
 
 
 class GmapsField(models.CharField):
@@ -44,7 +44,7 @@ class GeotypeField(models.CharField):
 
 class GeotypeFormField(forms.CharField):
     def __init__(self, *args, **kwargs):
-        kwargs.update({'widget': forms.Select})
+        kwargs.update({'widget': GeotypeSelect})
         super(GeotypeFormField, self).__init__(*args, **kwargs)
 
 # Fix field for South
