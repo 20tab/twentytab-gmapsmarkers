@@ -99,7 +99,9 @@ jQuery(function($){
                 dataType: 'json',
                 data: {
                     address: address,
-                    key: config.googleApiKey
+                    key: config.googleApiKey,
+                    language: config.language_code
+
                 },
                 success: function (data) {
                     if (data.status === 'OK') {
