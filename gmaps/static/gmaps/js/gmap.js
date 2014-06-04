@@ -129,7 +129,7 @@ jQuery(function($){
 
             // Set map options (defaults)
             mapOptions = {
-                zoom: 4,
+                maxZoom:12,
                 center: new google.maps.LatLng(results[0].geometry.location.lat, results[0].geometry.location.lng)
             };
 
@@ -268,12 +268,14 @@ jQuery(function($){
 
             //Fit these bounds to the map
             map.fitBounds(bounds);
-            // if ( locations.length <= 1 ) {
-            //     var listener = google.maps.event.addListener(map, 'idle', function() {
-            //         map.setZoom(14);
-            //         google.maps.event.removeListener(listener);
-            //     });
-            // }
+            if ( locations.length <= 1 ) {
+                 var listener = google.maps.event.addListener(map, 'idle', function() {
+                     map.setZoom(14);
+                     google.maps.event.removeListener(listener);
+                 });
+            }
+
+
         }
 
         return this.each(function(){
