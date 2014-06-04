@@ -1,5 +1,6 @@
 from appconf import AppConf
 from django.conf import settings
+from django.utils.translation import get_language
 
 
 class GmapsConf(AppConf):
@@ -16,6 +17,7 @@ class GmapsConf(AppConf):
         getattr(settings, u'STATIC_URL', u'/static/'),
         u"gmaps/select2-3.4.8/select2.css"
     )
+    LANGUAGE_CODE = get_language()
 
     def configure_static_url(self, value):
         if not getattr(settings, 'STATIC_URL', None):
@@ -40,3 +42,9 @@ class GmapsConf(AppConf):
             self._meta.holder.SELECT2_CSS_LIB = value
             return value
         return getattr(settings, 'SELECT2_CSS_LIB')
+
+    def configure_language_code(self, value):
+        if not getattr(settings, 'LANGUAGE_CODE', None):
+            self._meta.holder.LANGUAGE_CODE = value
+            return value
+        return getattr(settings, 'LANGUAGE_CODE')

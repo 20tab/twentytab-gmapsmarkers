@@ -1,6 +1,7 @@
 from django.db import models
 from django import forms
 from gmaps.widgets import GmapsSelectAutocomplete, GeotypeSelect
+from django.conf import settings
 
 
 class GmapsField(models.CharField):
@@ -8,6 +9,7 @@ class GmapsField(models.CharField):
         kwargs['max_length'] = kwargs.pop("max_length", 250)
         self.plugin_options = kwargs.pop("plugin_options", {})
         self.select2_options = kwargs.pop("select2_options", {})
+        self.language_code = kwargs.pop("language_code", settings.LANGUAGE_CODE)
         super(GmapsField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
@@ -16,15 +18,16 @@ class GmapsField(models.CharField):
             'form_class': GmapsFormField,
             'plugin_options': self.plugin_options,
             'select2_options': self.select2_options,
+            'language_code': self.language_code
         }
         defaults.update(kwargs)
         return super(GmapsField, self).formfield(**defaults)
 
 
 class GmapsFormField(forms.CharField):
-    def __init__(self, plugin_options={}, select2_options={}, *args, **kwargs):
+    def __init__(self, plugin_options={}, select2_options={}, language_code=settings.LANGUAGE_CODE, *args, **kwargs):
         kwargs.update({'widget': GmapsSelectAutocomplete(
-            plugin_options=plugin_options, select2_options=select2_options
+            plugin_options=plugin_options, select2_options=select2_options, language_code=language_code
         )})
         super(GmapsFormField, self).__init__(*args, **kwargs)
 

@@ -4,14 +4,17 @@ from django.utils.safestring import mark_safe
 
 
 class GmapsSelectAutocomplete(forms.TextInput):
-    def __init__(self, attrs=None, plugin_options={}, select2_options={}):
+    def __init__(self, attrs=None, plugin_options={}, select2_options={}, language_code=settings.LANGUAGE_CODE):
         super(GmapsSelectAutocomplete, self).__init__(attrs)
         self.plugin_options = plugin_options
         self.select2_options = select2_options
+        self.language_code = language_code
+        self.Media.js = ('https://maps.googleapis.com/maps/api/js?v=3.14&key={}&sensor=false&language={}'.format(
+            settings.GMAPS_API_KEY, self.language_code
+        ),) + self.Media.js
 
     def render(self, name, value, attrs=None):
         res = super(GmapsSelectAutocomplete, self).render(name, value, attrs)
-        print "\n\nVALUE: ", value
         tmp_id = attrs['id'].replace(self.plugin_options['gmaps_field_name'], '')
 
         if 'geocode_field' in self.plugin_options:
@@ -32,11 +35,12 @@ class GmapsSelectAutocomplete(forms.TextInput):
         res = mark_safe(
             u"""
             {}
-            <div class="gmaps-map-init" id="gmaps-map-init-{}" data-googleapikey="{}"{}></div>
+            <div class="gmaps-map-init" id="gmaps-map-init-{}" data-languagecode="{}" data-googleapikey="{}"{}></div>
             """.
             format(
                 res,
                 attrs['id'],
+                self.language_code,
                 settings.GMAPS_API_KEY,
                 opts
             )
@@ -45,7 +49,6 @@ class GmapsSelectAutocomplete(forms.TextInput):
 
     class Media:
         js = (
-            'https://maps.googleapis.com/maps/api/js?v=3.14&key={}&sensor=false'.format(settings.GMAPS_API_KEY),
             settings.JQUERY_LIB,
             settings.SELECT2_LIB,
             u'{}gmaps/js/gmap.js'.format(settings.STATIC_URL),

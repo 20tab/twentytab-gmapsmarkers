@@ -4,14 +4,17 @@ jQuery(function($){
 
         var self = $(this);
 
+        var language_code = self.data('language-code');
+
         var config = $.extend({
             googleApiKey: "",
             mapCanvas: 'map-canvas',
-            googleApiUrl: "https://maps.googleapis.com/maps/api/geocode/json",
+            googleApiUrl: "https://maps.googleapis.com/maps/api/geocode/json?sensor=false",
             typeid: null,
             geocodeid: null,
             select2_options: {},
-            allowed_types: []
+            allowed_types: [],
+            language_code: 'en'
         }, options);
 
         $.fn.gmap_init = function(){
@@ -23,7 +26,8 @@ jQuery(function($){
                     data: function (term, page) {
                         return {
                             address: term,
-                            key: config.googleApiKey
+                            key: config.googleApiKey,
+                            language: config.language_code
                         };
                     },
                     results: function (data, page) {
@@ -274,7 +278,6 @@ jQuery(function($){
             if(!config.googleApiKey){
                 console.log('You must set google api key!');
             }
-
             $(this).gmap_init();
             $(this).on('change', select_change_handler);
 

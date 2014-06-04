@@ -9,7 +9,7 @@ jQuery(function(){
                 var opts = $(this).data();
                 var plugin_options = {};
                 var select2_options = {}
-                for(el in opts){
+                for(var el in opts){
                     if(el.indexOf('plugin_') != -1){
                         plugin_options[el.replace('plugin_', '')] = opts[el];
                         if(opts[el].indexOf('__prefix__-') != -1){
@@ -26,6 +26,7 @@ jQuery(function(){
                 $('#'+id).ttGmap($.extend({
                      mapCanvas:'#gmaps-map-init-'+id,
                      googleApiKey: opts['googleapikey'],
+                     language_code: opts['languagecode'],
                      select2_options: select2_options
                  }, plugin_options));
                 $(this).addClass('processed');
