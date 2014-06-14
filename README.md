@@ -34,11 +34,7 @@ SELECT2_CSS_LIB = 'path_to_select2_css'
 
 - Static files
 
-Run collectstatic command or map static directory. If you use uWSGI you can map static files:
-
-```ini
-static-map = /static/gmaps/=%(path_to_site_packages)/gmaps/static/gmaps
-```
+Run collectstatic command or map static directory.
 
 ## Usage
 
