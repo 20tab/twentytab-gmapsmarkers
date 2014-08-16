@@ -128,8 +128,8 @@ jQuery(function($){
 
             // Set map options (defaults)
             mapOptions = {
-                maxZoom:12,
-                minZoom:2,
+                //maxZoom:12,
+                //minZoom:2,
                 center: new google.maps.LatLng(results[0].geometry.location.lat, results[0].geometry.location.lng)
             };
 
