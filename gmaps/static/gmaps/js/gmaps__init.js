@@ -1,6 +1,5 @@
 jQuery(function(){
 
-
     function gmaps_select2_init(){
 
         $('.gmaps-map-init').not('.processed').each(function(){

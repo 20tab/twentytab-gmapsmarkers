@@ -65,28 +65,27 @@ jQuery(function($){
         function contains(arr,obj) {
             return (arr.indexOf(obj) != -1);
         }
-        var type_choices = function(results){
-            var types_list = [];
-            for(el in results){
-                var components = results[el]['address_components'];
-                for(c in components){
-                    var types = components[c]['types'];
-                    if(config.allowed_types.length > 0){
-                        for(t in types){
-                            if(contains(config.allowed_types, types[t])){
-                                types_list.push(types[t]);
-                            }
+
+        var type_choices = function(result){
+            var types_list = ['',];
+            var components = result['address_components'];
+            for(c in components){
+                var types = components[c]['types'];
+                if(config.allowed_types.length > 0){
+                    for(t in types){
+                        if(contains(config.allowed_types, types[t])){
+                            types_list.push(types[t]);
                         }
                     }
-                    else{
-                        types_list.push.apply(types_list, types);
-                    }
+                }
+                else{
+                    types_list.push.apply(types_list, types);
                 }
             }
             types_list = types_list.filter( function( item, index, inputArray ) {
                 return inputArray.indexOf(item) == index;
             }).sort();
-            $('#'+config.typeid).html("")
+            $('#'+config.typeid).html("");
             $(types_list).each(function() {
                 $('#'+config.typeid).append($("<option>").attr('value',this).text(this));
             });
@@ -129,7 +128,8 @@ jQuery(function($){
 
             // Set map options (defaults)
             mapOptions = {
-                maxZoom:12,
+                //maxZoom:12,
+                //minZoom:2,
                 center: new google.maps.LatLng(results[0].geometry.location.lat, results[0].geometry.location.lng)
             };
 
@@ -137,7 +137,7 @@ jQuery(function($){
             var id_canvas = config.mapCanvas.replace('#','');
             map = new google.maps.Map(document.getElementById(id_canvas), mapOptions);
 
-            // Set marker for each result
+            // Set marker and bounds for each result
             for ( var i = 0; i < results.length; i++ ) {
                 lat = results[i].geometry.location.lat;
                 lng = results[i].geometry.location.lng;
@@ -198,9 +198,9 @@ jQuery(function($){
             var icon = {
                 path: google.maps.SymbolPath.CIRCLE,
                 fillOpacity: 0.8,
-                fillColor: 'ff0000',
+                fillColor: '#ff0000',
                 strokeOpacity: 1.0,
-                strokeColor: 'ff0000',
+                strokeColor: '#000000',
                 strokeWeight: 1.0,
                 scale: 10
             };
@@ -218,7 +218,7 @@ jQuery(function($){
             });
 
 
-            var iconSelected = $.extend({}, icon, {fillColor: 'ED7A07'});
+            var iconSelected = $.extend({}, icon, {fillColor: '#00ff00'});
             // Set CLICK event for marker
 
             google.maps.event.addListener(marker, 'click', function(e) {
@@ -233,6 +233,7 @@ jQuery(function($){
                 if (selectedMarker) {
                     selectedMarker.setIcon(icon);
                 }
+                type_choices(result);
 
                 for(m in all_markers){
                     all_markers[m].setIcon(icon);
@@ -247,40 +248,38 @@ jQuery(function($){
         }
 
 
-        // Set automatix zoom and center according to markers
-        function autofit_map(map, locations) {
+        // Set automatic zoom and center according to viewport
+        function autofit_map(map, results) {
 
             //Make an array of the LatLng's of the markers you want to show
-            var markersList = [];
-            for ( var i = 0; i < locations.length; i++ ) {
-                var location = locations[i];
-                markersList.push(new google.maps.LatLng(location.geometry.location.lat, location.geometry.location.lng));
+            var boundsList = [];
+            for ( var i = 0; i < results.length; i++ ) {
+                var res = results[i];
+                boundsList.push(new google.maps.LatLng(res.geometry.viewport.northeast.lat, res.geometry.viewport.northeast.lng));
+                boundsList.push(new google.maps.LatLng(res.geometry.viewport.southwest.lat, res.geometry.viewport.southwest.lng));
             }
 
             //Create a new viewpoint bound
             var bounds = new google.maps.LatLngBounds();
 
             //Go through each...
-            for ( var i = 0; i < markersList.length; i++ ) {
+            for ( var i = 0; i < boundsList.length; i++ ) {
                 //And increase the bounds to take this point
-                bounds.extend(markersList[i]);
+                bounds.extend(boundsList[i]);
             }
 
             //Fit these bounds to the map
             map.fitBounds(bounds);
-            if ( locations.length <= 1 ) {
+            if ( results.length <= 1 ) {
                  var listener = google.maps.event.addListener(map, 'idle', function() {
-                     map.setZoom(14);
                      google.maps.event.removeListener(listener);
                  });
             }
-
-
         }
 
         return this.each(function(){
             if(!config.googleApiKey){
-                console.log('You must set google api key!');
+                console.log('You should set google api key!');
             }
             $(this).gmap_init();
             $(this).on('change', select_change_handler);
