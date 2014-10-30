@@ -5,11 +5,13 @@ from django.conf import settings
 
 
 class GmapsField(models.CharField):
+
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = kwargs.pop("max_length", 250)
         self.plugin_options = kwargs.pop("plugin_options", {})
         self.select2_options = kwargs.pop("select2_options", {})
-        self.language_code = kwargs.pop("language_code", settings.LANGUAGE_CODE)
+        self.language_code = kwargs.pop(
+            "language_code", settings.GMAPS_LANGUAGE_CODE)
         super(GmapsField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
@@ -25,14 +27,18 @@ class GmapsField(models.CharField):
 
 
 class GmapsFormField(forms.CharField):
-    def __init__(self, plugin_options={}, select2_options={}, language_code=settings.LANGUAGE_CODE, *args, **kwargs):
+
+    def __init__(self, plugin_options={}, select2_options={},
+                 language_code=settings.GMAPS_LANGUAGE_CODE, *args, **kwargs):
         kwargs.update({'widget': GmapsSelectAutocomplete(
-            plugin_options=plugin_options, select2_options=select2_options, language_code=language_code
+            plugin_options=plugin_options, select2_options=select2_options,
+            language_code=language_code
         )})
         super(GmapsFormField, self).__init__(*args, **kwargs)
 
 
 class GeotypeField(models.CharField):
+
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = kwargs.pop("max_length", 250)
         super(GeotypeField, self).__init__(*args, **kwargs)
@@ -46,6 +52,7 @@ class GeotypeField(models.CharField):
 
 
 class GeotypeFormField(forms.CharField):
+
     def __init__(self, *args, **kwargs):
         kwargs.update({'widget': GeotypeSelect})
         super(GeotypeFormField, self).__init__(*args, **kwargs)
