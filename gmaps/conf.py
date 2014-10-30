@@ -55,3 +55,6 @@ class GmapsConf(AppConf):
             self._meta.holder.GMAPS_LANGUAGE_CODE = value
             return value
         return getattr(settings, 'GMAPS_LANGUAGE_CODE')
+
+    class Meta:
+        prefix = ""
