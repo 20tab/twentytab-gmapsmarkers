@@ -17,6 +17,7 @@ INSTALLED_APPS = {
 }
 
 GMAPS_API_KEY = "xxxxxxxxxxxxxxxxxxxx"
+GMAPS_LANGUAGE_CODE = "en"  # default value
 
 ```
 

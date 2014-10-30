@@ -4,7 +4,8 @@ from django.utils.safestring import mark_safe
 
 
 class GmapsSelectAutocomplete(forms.TextInput):
-    def __init__(self, attrs=None, plugin_options={}, select2_options={}, language_code=settings.LANGUAGE_CODE):
+
+    def __init__(self, attrs=None, plugin_options={}, select2_options={}, language_code=settings.GMAPS_LANGUAGE_CODE):
         super(GmapsSelectAutocomplete, self).__init__(attrs)
         self.plugin_options = plugin_options
         self.select2_options = select2_options

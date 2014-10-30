@@ -18,6 +18,7 @@ class GmapsConf(AppConf):
         u"gmaps/select2-3.4.8/select2.css"
     )
     LANGUAGE_CODE = get_language()
+    GMAPS_LANGUAGE_CODE = u'en'
 
     def configure_static_url(self, value):
         if not getattr(settings, 'STATIC_URL', None):
@@ -48,3 +49,9 @@ class GmapsConf(AppConf):
             self._meta.holder.LANGUAGE_CODE = value
             return value
         return getattr(settings, 'LANGUAGE_CODE')
+
+    def configure_gmaps_language_code(self, value):
+        if not getattr(settings, 'GMAPS_LANGUAGE_CODE', None):
+            self._meta.holder.GMAPS_LANGUAGE_CODE = value
+            return value
+        return getattr(settings, 'GMAPS_LANGUAGE_CODE')
