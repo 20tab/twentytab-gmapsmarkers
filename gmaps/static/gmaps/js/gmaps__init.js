@@ -1,4 +1,4 @@
-jQuery(function(){
+jQuery(function($){
 
     function gmaps_select2_init(){
 
