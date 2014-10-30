@@ -1,7 +1,8 @@
+from . import conf
+from django.conf import settings
 from django.db import models
 from django import forms
 from gmaps.widgets import GmapsSelectAutocomplete, GeotypeSelect
-from django.conf import settings
 
 
 class GmapsField(models.CharField):
