@@ -52,12 +52,12 @@ class GmapsSelectAutocomplete(forms.TextInput):
         js = (
             settings.JQUERY_LIB,
             settings.SELECT2_LIB,
-            u'{}gmaps/js/gmap.js'.format(settings.STATIC_URL),
-            u'{}gmaps/js/gmaps__init.js'.format(settings.STATIC_URL),
+            u'{}gmapsmarkers/js/gmaps.js'.format(settings.STATIC_URL),
+            u'{}gmapsmarkers/js/gmaps__init.js'.format(settings.STATIC_URL),
         )
         css = {u"all": (
             settings.SELECT2_CSS_LIB,
-            u"{}gmaps/css/gmaps.css".format(settings.STATIC_URL),
+            u"{}gmapsmarkers/css/gmaps.css".format(settings.STATIC_URL),
         )}
 
 

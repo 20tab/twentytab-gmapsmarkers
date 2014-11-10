@@ -7,15 +7,15 @@ class GmapsConf(AppConf):
     STATIC_URL = u'/static/'
     JQUERY_LIB = u"{}{}".format(
         getattr(settings, u'STATIC_URL', u'/static/'),
-        u"gmaps/js/jquery-2.1.0.min.js"
+        u"gmapsmarkers/js/jquery-2.1.0.min.js"
     )
     SELECT2_LIB = u"{}{}".format(
         getattr(settings, u'STATIC_URL', u'/static/'),
-        u"gmaps/select2-3.4.8/select2.min.js"
+        u"gmapsmarkers/select2-3.4.8/select2.min.js"
     )
     SELECT2_CSS_LIB = u"{}{}".format(
         getattr(settings, u'STATIC_URL', u'/static/'),
-        u"gmaps/select2-3.4.8/select2.css"
+        u"gmapsmarkers/select2-3.4.8/select2.css"
     )
     LANGUAGE_CODE = get_language()
     GMAPS_LANGUAGE_CODE = u'en'

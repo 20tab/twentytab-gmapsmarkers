@@ -1,18 +1,18 @@
-twentytab-gmaps
+twentytab-gmapsmarkers
 ===============
 
 A django widget with [Select2](http://ivaynberg.github.com/select2/) integration that uses [google geocode](https://developers.google.com/maps/documentation/geocoding/) api to search places and create maps with markers
 
 ## Installation
 
-Use the following command: <b><i>pip install twentytab-gmaps</i></b>
+Use the following command: <b><i>pip install twentytab-gmapsmarkers</i></b>
 
 ## Configuration
 
 ```py
 INSTALLED_APPS = {
     ...,
-    'gmaps',
+    'gmapsmarkers',
     ...
 }
 
@@ -41,7 +41,7 @@ Run collectstatic command or map static directory.
 
 ```py
 from django.db import models
-from gmaps.fields import GmapsField, GeotypeField
+from gmapsmarkers.fields import GmapsField, GeotypeField
 
 
 class MyClass(models.Model):
@@ -60,7 +60,7 @@ class MyClass(models.Model):
         return self.address
 ```
 
-![ScreenShot](https://raw.github.com/20tab/twentytab-gmaps/master/img/screenshot.png)
+![ScreenShot](https://raw.github.com/20tab/twentytab-gmapsmarkers/master/img/screenshot.png)
 
 
 ## Google geocode results

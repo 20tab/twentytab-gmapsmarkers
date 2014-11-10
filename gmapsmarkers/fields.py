@@ -2,7 +2,7 @@ from . import conf
 from django.conf import settings
 from django.db import models
 from django import forms
-from gmaps.widgets import GmapsSelectAutocomplete, GeotypeSelect
+from gmapsmarkers.widgets import GmapsSelectAutocomplete, GeotypeSelect
 
 
 class GmapsField(models.CharField):
@@ -61,7 +61,7 @@ class GeotypeFormField(forms.CharField):
 # Fix field for South
 try:
     from south.modelsinspector import add_introspection_rules
-    add_introspection_rules([], ["^gmaps\.fields\.GmapsField"])
-    add_introspection_rules([], ["^gmaps\.fields\.GeotypeField"])
+    add_introspection_rules([], ["^gmapsmarkers\.fields\.GmapsField"])
+    add_introspection_rules([], ["^gmapsmarkers\.fields\.GeotypeField"])
 except:
     pass
