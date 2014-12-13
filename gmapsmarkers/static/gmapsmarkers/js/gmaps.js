@@ -160,23 +160,27 @@ jQuery(function($){
             }
             var map = new google.maps.Map(document.getElementById(id_canvas), mapOptions);
 
-            var marker = new google.maps.Marker({
-                position: myLatlng,
-                map: map
-            });
-
             var geocoder = new google.maps.Geocoder();
             geocoder.geocode({'latLng': myLatlng}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
+                    var location_to_use = results[0].geometry.location;
+                    var viewport_to_use = results[0].geometry.viewport;
                     for(var r in results){
                         for(var t in results[r].types){
                             if(level == results[r].types[t]){
-                                map.setCenter(results[r].geometry.location);
-					            map.fitBounds(results[r].geometry.viewport);
+                                location_to_use = results[r].geometry.location;
+					            viewport_to_use = results[r].geometry.viewport;
                                 break;
                             }
                         }
                     }
+                    map.setCenter(location_to_use);
+                    map.fitBounds(viewport_to_use);
+                    new google.maps.Marker({
+                        position: location_to_use,
+                        map: map
+                    });
+
 
 				}else{
 					alert("Geocode was not successful for the following reason: " + status);
