@@ -3,8 +3,8 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 
-#class GmapsSelectAutocomplete(forms.TextInput):
-class GmapsSelectAutocomplete(forms.Select):
+class GmapsSelectAutocomplete(forms.TextInput):
+#class GmapsSelectAutocomplete(forms.Select):
 
     def __init__(self, attrs=None, plugin_options={}, select2_options={},
                  language_code=settings.GMAPS_LANGUAGE_CODE):

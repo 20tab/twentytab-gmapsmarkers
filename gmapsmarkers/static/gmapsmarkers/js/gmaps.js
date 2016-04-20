@@ -2,7 +2,7 @@ jQuery(function($){
 
     $.fn.ttGmap = function(options){
 
-        console.log("Inizio lo script");
+        //console.log("Inizio lo script");
 
         var self = $(this);
 
@@ -51,7 +51,7 @@ jQuery(function($){
                 //    callback(data);
                 //}
             }
-            console.log("Inizializzo mappa");
+            //console.log("Inizializzo mappa");
             $(this).select2($.extend(opts,config.select2_options));
             $('#'+config.typeid).select2($.extend({
                 triggerChange: true
@@ -62,7 +62,7 @@ jQuery(function($){
         }
 
         $.fn.destroy = function(){
-            console.log("Destroy");
+            //console.log("Destroy");
             $(this).select2('destroy');
         }
 
@@ -71,7 +71,7 @@ jQuery(function($){
         }
 
         var type_choices = function(result){
-            console.log("var function type_choices");
+            //console.log("var function type_choices");
             var types_list = ['',];
             var components = result['address_components'];
             for(c in components){
@@ -97,7 +97,7 @@ jQuery(function($){
         }
 
         var select_change_handler = function (e) {
-            console.log("select change");
+            //console.log("select change");
             var address = $(this).val();
             $.ajax({
                 url: config.googleApiUrl,
@@ -126,7 +126,7 @@ jQuery(function($){
 
         // initialize the map
         function init_map(results) {
-            console.log('init map');
+            //console.log('init map');
             var map,
                 mapOptions,
                 lat,
