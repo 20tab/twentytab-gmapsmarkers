@@ -3,26 +3,31 @@ from django.conf import settings
 from django.utils.safestring import mark_safe
 
 
-class GmapsSelectAutocomplete(forms.TextInput):
+#class GmapsSelectAutocomplete(forms.TextInput):
+class GmapsSelectAutocomplete(forms.Select):
 
-    def __init__(self, attrs=None, plugin_options={}, select2_options={}, language_code=settings.GMAPS_LANGUAGE_CODE):
+    def __init__(self, attrs=None, plugin_options={}, select2_options={},
+                 language_code=settings.GMAPS_LANGUAGE_CODE):
         super(GmapsSelectAutocomplete, self).__init__(attrs)
         self.plugin_options = plugin_options
         self.select2_options = select2_options
         self.language_code = language_code
-        self.Media.js = ('https://maps.googleapis.com/maps/api/js?v=3.14&key={}&sensor=false&language={}'.format(
-            settings.GMAPS_API_KEY, self.language_code
-        ),) + self.Media.js
+        self.Media.js = (
+            'https://maps.googleapis.com/maps/api/js?v=3.24&key={}&language={}'.format(
+                settings.GMAPS_API_KEY, self.language_code
+            ),) + self.Media.js
 
     def render(self, name, value, attrs=None):
         res = super(GmapsSelectAutocomplete, self).render(name, value, attrs)
         tmp_id = attrs['id'].replace(self.plugin_options['gmaps_field_name'], '')
 
         if 'geocode_field' in self.plugin_options:
-            self.plugin_options['geocodeid'] = '{}{}'.format(tmp_id, self.plugin_options['geocode_field'])
+            self.plugin_options['geocodeid'] = '{}{}'.format(
+                tmp_id, self.plugin_options['geocode_field'])
 
         if 'type_field' in self.plugin_options:
-            self.plugin_options['typeid'] = '{}{}'.format(tmp_id, self.plugin_options['type_field'])
+            self.plugin_options['typeid'] = '{}{}'.format(
+                tmp_id, self.plugin_options['type_field'])
 
         opts = ""
         if self.plugin_options:

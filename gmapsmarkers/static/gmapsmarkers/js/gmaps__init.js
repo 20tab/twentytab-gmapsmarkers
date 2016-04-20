@@ -5,6 +5,7 @@ jQuery(function($){
         $('.gmaps-map-init').not('.processed').each(function(){
             var id = $(this).attr('id').replace('gmaps-map-init-', '');
             if(id.indexOf("__prefix__") == -1){
+                console.log("gmaps map init");
                 var opts = $(this).data();
                 var plugin_options = {};
                 var select2_options = {}

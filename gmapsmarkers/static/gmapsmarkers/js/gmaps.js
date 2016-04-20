@@ -2,6 +2,8 @@ jQuery(function($){
 
     $.fn.ttGmap = function(options){
 
+        console.log("Inizio lo script");
+
         var self = $(this);
 
         var language_code = self.data('language-code');
@@ -9,7 +11,7 @@ jQuery(function($){
         var config = $.extend({
             googleApiKey: "",
             mapCanvas: 'map-canvas',
-            googleApiUrl: "https://maps.googleapis.com/maps/api/geocode/json?sensor=false",
+            googleApiUrl: "https://maps.googleapis.com/maps/api/geocode/json",
             typeid: null,
             geocodeid: null,
             select2_options: {},
@@ -44,11 +46,12 @@ jQuery(function($){
                         };
                     }
                 },
-                initSelection : function (element, callback) {
-                    var data = {id: element.val(), text: element.val()};
-                    callback(data);
-                }
+                //initSelection : function (element, callback) {
+                //    var data = {id: element.val(), text: element.val()};
+                //    callback(data);
+                //}
             }
+            console.log("Inizializzo mappa");
             $(this).select2($.extend(opts,config.select2_options));
             $('#'+config.typeid).select2($.extend({
                 triggerChange: true
@@ -59,6 +62,7 @@ jQuery(function($){
         }
 
         $.fn.destroy = function(){
+            console.log("Destroy");
             $(this).select2('destroy');
         }
 
@@ -67,6 +71,7 @@ jQuery(function($){
         }
 
         var type_choices = function(result){
+            console.log("var function type_choices");
             var types_list = ['',];
             var components = result['address_components'];
             for(c in components){
@@ -92,6 +97,7 @@ jQuery(function($){
         }
 
         var select_change_handler = function (e) {
+            console.log("select change");
             var address = $(this).val();
             $.ajax({
                 url: config.googleApiUrl,
@@ -120,6 +126,7 @@ jQuery(function($){
 
         // initialize the map
         function init_map(results) {
+            console.log('init map');
             var map,
                 mapOptions,
                 lat,
@@ -227,8 +234,8 @@ jQuery(function($){
 
             google.maps.event.addListener(marker, 'click', function(e) {
                 var marker_coords = this.position;
-                var marker_lat = marker_coords[Object.keys(marker_coords)[0]];
-                var marker_lng = marker_coords[Object.keys(marker_coords)[1]];
+                var marker_lat = marker_coords.lat();
+                var marker_lng = marker_coords.lng();
                 var marker_name = this.title;
                 $('#'+config.geocodeid).val(marker_lat+","+marker_lng);
 
